@@ -40,7 +40,7 @@ public class MedicoController {
     @Transactional
     public void deleteMedico(@PathVariable Long id){
         //repository.deleteById(id); exclusao permanente
-        var medico = repository.getReferenceById(id);
+        var medico = repository.getReferenceById(id);//marca no banco como excluido
         medico.excluir();
     }
 }
