@@ -8,5 +8,4 @@ public class Cliente {
     private String telefone;
     private String email;
     private Endereco endereco;
-    // futuro
 }
