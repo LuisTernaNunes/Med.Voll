@@ -30,4 +30,11 @@ public class ClienteControler {
         var cliente = repository.getReferenceById(dados.id());
         cliente.atualizainformacao(dados);
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void apagaCliente(@PathVariable Long id){
+        var cliente = repository.getReferenceById(id);
+        cliente.apagaCliente();
+    }
 }

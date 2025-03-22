@@ -49,4 +49,8 @@ public class Cliente {
             this.endereco.atualizaInformacao(dados.endereco());
         }
     }
+
+    public void apagaCliente() {
+        this.ativo = false;
+    }
 }
