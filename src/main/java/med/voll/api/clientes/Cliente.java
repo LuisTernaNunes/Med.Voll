@@ -1,6 +1,7 @@
 package med.voll.api.clientes;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,4 +25,13 @@ public class Cliente {
     private Endereco endereco;
     private String cpf;
     private boolean ativo;
+
+    public Cliente(@Valid DadosCadCliente cliente) {
+        this.nome = cliente.nome();
+        this.telefone = cliente.telefone();
+        this.email = cliente.email();
+        this.cpf = cliente.cpf();
+        this.endereco = cliente.endereco();
+        this.ativo = true;
+    }
 }
