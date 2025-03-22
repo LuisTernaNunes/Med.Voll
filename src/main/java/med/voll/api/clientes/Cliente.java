@@ -31,7 +31,22 @@ public class Cliente {
         this.telefone = cliente.telefone();
         this.email = cliente.email();
         this.cpf = cliente.cpf();
-        this.endereco = cliente.endereco();
+        this.endereco = new Endereco(cliente.endereco());
         this.ativo = true;
+    }
+
+    public void atualizainformacao(@Valid DadosAtualizaCliente dados) {
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if(dados.email() != null){
+            this.email = dados.email();
+        }
+        if(dados.telefone() != null){
+            this.telefone = dados.telefone();
+        }
+        if(dados.endereco() != null){
+            this.endereco.atualizaInformacao(dados.endereco());
+        }
     }
 }
