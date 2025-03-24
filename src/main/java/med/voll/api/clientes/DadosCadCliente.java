@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import med.voll.api.endereco.DadosEndereco;
-import med.voll.api.endereco.Endereco;
-import org.hibernate.validator.constraints.br.CPF;
+
+
 
 public record DadosCadCliente(@NotBlank
                               String nome,
@@ -16,7 +16,7 @@ public record DadosCadCliente(@NotBlank
                               String email,
                               @NotBlank
                               @Pattern(regexp = "\\d{11}")
-                              @CPF
+                              @NotBlank
                               String cpf,
                               @NotBlank
                               String telefone,
