@@ -1,4 +1,4 @@
-package med.voll.api.clientes;
+package med.voll.api.domain.clientes;
 
 public record DadosListaClientes(Long id,
                                  String nome,

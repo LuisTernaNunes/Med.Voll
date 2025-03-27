@@ -1,8 +1,6 @@
-package med.voll.api.clientes;
+package med.voll.api.domain.clientes;
 
-import med.voll.api.endereco.Endereco;
-import med.voll.api.medicos.Especialidade;
-import med.voll.api.medicos.Medico;
+import med.voll.api.domain.endereco.Endereco;
 
 public record DadosCompletoCliente(Long id,
                                    String nome,
