@@ -41,12 +41,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return this.login;
+        return login;
     }
 
     @Override
