@@ -29,6 +29,11 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+        /*
+        adicionar permissao admin para somente admins excluir
+        .requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.DELETE, "/pacientes").hasRole("ADMIN")
+        * */
     }
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration configuration) throws Exception{
