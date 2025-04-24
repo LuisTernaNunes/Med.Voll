@@ -2,10 +2,14 @@ package med.voll.api.domain.consultas;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.domain.clientes.Cliente;
+import med.voll.api.domain.medicos.Medico;
 
 import java.time.LocalDateTime;
 
@@ -20,13 +24,13 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idCliente;
-    private Long idMedico;
+    private Cliente cliente;
+    private Medico medico;
     private LocalDateTime data;
 
-    public Consulta(@Valid DadosAgendamentoConsulta dados) {
-        this.idCliente = dados.idPaciente();
-        this.idMedico = dados.idMedico();
-        this.data = dados.data();
+    public Consulta(Cliente paciente, Medico medico, @NotNull @Future LocalDateTime data) {
+        this.cliente = paciente;
+        this.medico = medico;
+        this.data = data;
     }
 }
