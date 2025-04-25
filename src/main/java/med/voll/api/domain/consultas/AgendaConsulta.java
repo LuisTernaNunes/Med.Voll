@@ -2,21 +2,27 @@ package med.voll.api.domain.consultas;
 
 import med.voll.api.domain.ValidacaoException;
 import med.voll.api.domain.clientes.ClienteRepository;
+import med.voll.api.domain.consultas.Validacoes.ValidadorAgendamento;
 import med.voll.api.domain.medicos.Medico;
 import med.voll.api.domain.medicos.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AgendaConsulta {
     @Autowired
-    ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
-    MedicoRepository medicoRepository;
+    private MedicoRepository medicoRepository;
 
     @Autowired
-    ConsultaRepository consultaRepository;
+    private ConsultaRepository consultaRepository;
+
+    @Autowired
+    private List<ValidadorAgendamento> validadorAgendamentos;
 
     public void agendar(DadosAgendamentoConsulta dados){
         if(!clienteRepository.existsById(dados.idPaciente())){
@@ -26,6 +32,8 @@ public class AgendaConsulta {
         if(dados.idMedico() != null || !medicoRepository.existsById(dados.idMedico())){
             throw new ValidacaoException("Medico nao cadastrado");
         }
+
+        validadorAgendamentos.forEach(v -> v.validar(dados));
 
         var paciente = clienteRepository.findById(dados.idPaciente()).get();
         var medico = escolheMedico(dados);
