@@ -16,7 +16,7 @@ public class HorarioConsultasMedico implements ValidadorAgendamento{
             return;
         }
 
-        if(repository.existsByMedicoIdAndData(dados.idMedico(),dados.data())){
+        if(repository.existsByMedicoIdAndDataAndAtivoTrue(dados.idMedico(),dados.data())){
             throw new ValidacaoException("Medico ja possui consulta nesse horario");
         }
     }

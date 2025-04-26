@@ -15,8 +15,15 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
     SELECT COUNT(c) > 0 FROM Consulta c
     WHERE c.cliente.id = :id
     AND c.data BETWEEN :primeiroHorario AND :ultimoHorario
+    AND c.ativo = false
     """)
     boolean existsByClienteIdAndDataBetween(@NotNull Long id, LocalDateTime primeiroHorario, LocalDateTime ultimoHorario);
 
-    boolean existsByMedicoIdAndData(Long aLong, @NotNull @Future LocalDateTime data);
+    @Query("""
+    SELECT COUNT(c) > 0 FROM Consulta c
+    WHERE c.medico.id = :medicoId
+      AND c.data = :data
+      AND c.ativo = false
+""")
+    boolean existsByMedicoIdAndDataAndAtivoTrue(Long medicoId, @NotNull @Future LocalDateTime data);
 }

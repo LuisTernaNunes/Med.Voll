@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.domain.clientes.DadosCompletoCliente;
 import med.voll.api.domain.usuario.*;
@@ -28,6 +29,7 @@ public class UsuarioController {
 
     @PostMapping
     @RequestMapping("/login")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity efetuaLogin(@RequestBody @Valid DadosLogin dados){
         System.out.println(dados.login()+" "+dados.senha());
         var token = new UsernamePasswordAuthenticationToken(dados.login(),dados.senha());
