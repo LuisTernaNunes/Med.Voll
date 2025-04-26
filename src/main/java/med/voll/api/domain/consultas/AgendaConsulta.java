@@ -29,8 +29,8 @@ public class AgendaConsulta {
             throw new ValidacaoException("Paciente nao cadastrado");
         }
 
-        if(dados.idMedico() != null || !medicoRepository.existsById(dados.idMedico())){
-            throw new ValidacaoException("Medico nao cadastrado");
+        if(dados.idMedico() == null || !medicoRepository.existsById(dados.idMedico())){
+            throw new ValidacaoException(dados.idMedico()+"Medico nao cadastrado");
         }
 
         validadorAgendamentos.forEach(v -> v.validar(dados));

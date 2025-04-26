@@ -11,7 +11,8 @@ public class CancelarConsulta {
     @Autowired
     ConsultaRepository consultaRepository;
     public void cancelamento(DadosCancelamento dados){
-        if(!consultaRepository.existsByIdAndCancelamentoFalse(dados.id())){
+        System.out.println(dados.motivoCancelamento());
+        if(!consultaRepository.existsByIdAndAtivoFalse(dados.id())){
             throw new ValidacaoException("Consulta nao encontrada");
         }
         var consulta = consultaRepository.findById(dados.id()).get();
@@ -20,6 +21,7 @@ public class CancelarConsulta {
             throw new ValidacaoException("Consulta com menos de 24H nao podem ser canceladas");
         }
         consulta.CancelaConsulta(dados);
+        System.out.println(consulta.getMotivoCancelamento());
         consultaRepository.save(consulta);
     }
 }

@@ -15,7 +15,7 @@ public class ConsultasController {
 
     @Autowired
 
-    CancelarConsulta cacelamento;
+    CancelarConsulta cancelamento;
 
     @PostMapping
     @Transactional
@@ -27,7 +27,7 @@ public class ConsultasController {
     @DeleteMapping
     @Transactional
     public ResponseEntity cancelarConsulta(@RequestBody @Valid DadosCancelamento dados){
-        cacelamento.cancelamento(dados);
+        cancelamento.cancelamento(dados);
         return ResponseEntity.ok().build();
     }
 

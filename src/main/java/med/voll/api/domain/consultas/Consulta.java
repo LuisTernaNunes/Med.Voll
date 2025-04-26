@@ -1,7 +1,6 @@
 package med.voll.api.domain.consultas;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,24 +24,25 @@ public class Consulta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "peciente_id")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id")
     private Medico medico;
     private LocalDateTime data;
-    private Boolean cancelada;
-    private Cancelamento cancelamento;
+    private Boolean ativo;
+    @Enumerated(EnumType.STRING)
+    private MotivoCancelamento motivoCancelamento;
 
     public Consulta(Cliente paciente, Medico medico, @NotNull @Future LocalDateTime data) {
         this.cliente = paciente;
         this.medico = medico;
         this.data = data;
-        this.cancelada = false;
+        this.ativo = false;
     }
 
     public void CancelaConsulta(DadosCancelamento dados){
-        this.cancelada = true;
-        this.cancelamento = dados.cancelamento();
+        this.ativo = true;
+        this.motivoCancelamento = dados.motivoCancelamento();
     }
 }

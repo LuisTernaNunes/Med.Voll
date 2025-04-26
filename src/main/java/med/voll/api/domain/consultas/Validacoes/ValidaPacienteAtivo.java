@@ -16,7 +16,7 @@ public class ValidaPacienteAtivo  implements ValidadorAgendamento{
             return;
         }
 
-        if (!repository.findAtivoById(dados.idPaciente())){
+        if (!repository.existsByIdAndAtivoTrue(dados.idPaciente())){
             throw new ValidacaoException("Paciente excluido");
         }
     }

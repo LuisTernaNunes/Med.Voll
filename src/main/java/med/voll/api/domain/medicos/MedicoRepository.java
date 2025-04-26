@@ -26,7 +26,7 @@ public interface MedicoRepository extends JpaRepository<Medico , Long> {
                 WHERE
                 c.data = :data
                 OR
-                c.cancelada = true
+                c.ativo = true
             )
             ORDER BY RAND()
             LIMIT 1
@@ -39,7 +39,6 @@ public interface MedicoRepository extends JpaRepository<Medico , Long> {
         WHERE 
         m.id = :id
             """)
-    boolean findAtivoById(Long idMedico);
+    boolean findAtivoById(Long id);
 
-    boolean existsByMedicoIdAndData(Long aLong, @NotNull @Future LocalDateTime data);
 }

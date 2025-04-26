@@ -1,6 +1,6 @@
 package med.voll.api.domain.consultas;
 
-public enum Cancelamento {
+public enum MotivoCancelamento {
     PACIENTEDESISTIU,
     MEDICOCANCELOU,
     OUTROS
