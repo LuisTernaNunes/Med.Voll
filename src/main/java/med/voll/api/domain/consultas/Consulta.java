@@ -1,8 +1,6 @@
 package med.voll.api.domain.consultas;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,12 +32,13 @@ public class Consulta {
     @Enumerated(EnumType.STRING)
     private MotivoCancelamento motivoCancelamento;
 
-    public Consulta(Cliente paciente, Medico medico, @NotNull @Future LocalDateTime data) {
+    public Consulta(Cliente paciente, Medico medico, LocalDateTime data) {
         this.cliente = paciente;
         this.medico = medico;
         this.data = data;
         this.ativo = false;
     }
+
 
     public void CancelaConsulta(DadosCancelamento dados){
         this.ativo = true;
