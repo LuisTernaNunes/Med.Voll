@@ -3,6 +3,7 @@ package med.voll.api.domain.medicos;
 import med.voll.api.domain.clientes.Cliente;
 import med.voll.api.domain.clientes.DadosCadCliente;
 import med.voll.api.domain.consultas.Consulta;
+import med.voll.api.domain.consultas.ConsultaRepository;
 import med.voll.api.domain.endereco.DadosEndereco;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -28,6 +30,10 @@ class MedicoRepositoryTest {
     MedicoRepository repository;
 
     @Autowired
+    ConsultaRepository consultarepository;
+
+
+    @Autowired
     private TestEntityManager em;
 
     @Test
@@ -39,7 +45,6 @@ class MedicoRepositoryTest {
         var paciente = cadastrarPaciente("Roberval","Roberval@Gmail.com","10034512354");
         cadastrarConsulta(medico,paciente,proximaSegunda);
 
-
         var medicoLivre = repository.escolherMedicoLivreData(Especialidade.CARDIOLOGIA,proximaSegunda);
         assertThat(medicoLivre).isNull();
     }
@@ -47,12 +52,13 @@ class MedicoRepositoryTest {
 
     @Test
     @DisplayName("Medicos disponiveis na data")
+    @Transactional
     void escolherMedicoLivreData() {
-        var proximaSegunda = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10,0);
+        var proximaSegunda = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(13,0);
 
-        var medico = cadastrarMedico("Joao","joao@irineumail.com","123412",Especialidade.CARDIOLOGIA);
+        var medico = cadastrarMedico("Joao","joao@irineumail.com","123412",Especialidade.ORTOPEDIA);
 
-        var medicoLivre = repository.escolherMedicoLivreData(Especialidade.CARDIOLOGIA,proximaSegunda);
+        var medicoLivre = repository.escolherMedicoLivreData(Especialidade.ORTOPEDIA,proximaSegunda);
         assertThat(medicoLivre).isEqualTo(medico);
     }
 
@@ -60,12 +66,15 @@ class MedicoRepositoryTest {
 
     //metodos para carregar no banco de dados
     private void cadastrarConsulta(Medico medico, Cliente paciente, LocalDateTime data) {
-        em.persist(new Consulta(paciente, medico,data));
+        Consulta consulta = new Consulta(paciente, medico,data);
+        em.persist(consulta);
     }
 
     private Medico cadastrarMedico(String nome, String email, String crm, Especialidade especialidade) {
         var medico = new Medico(dadosMedico(nome, email, crm, especialidade));
         em.persist(medico);
+        em.flush();
+        em.clear();
         return medico;
     }
 

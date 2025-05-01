@@ -14,23 +14,17 @@ public interface MedicoRepository extends JpaRepository<Medico , Long> {
 
 
 
-    @Query("""
-            SELECT m FROM Medico m
-            WHERE
-            m.ativo = true
-            and
-            especialidade = :especialidade
-            and
-            m.id NOT in(
-                SELECT c.medico.id FROM Consulta c
-                WHERE
-                c.data = :data
-                OR
-                c.ativo = true
-            )
-            ORDER BY RAND()
-            LIMIT 1
-            """)
+    @Query(value = """
+        SELECT * FROM medicos m
+        WHERE m.ativo = true
+        AND m.especialidade = :especialidade
+        AND m.id NOT IN (
+            SELECT c.medico_id FROM consultas c
+            WHERE c.data = :data AND c.ativo = true
+        )
+        ORDER BY RAND()
+        LIMIT 1
+        """, nativeQuery = true)
     Medico escolherMedicoLivreData(Especialidade especialidade, @NotNull @Future LocalDateTime data);
 
     @Query("""

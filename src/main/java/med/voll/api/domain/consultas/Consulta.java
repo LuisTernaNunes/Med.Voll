@@ -36,12 +36,12 @@ public class Consulta {
         this.cliente = paciente;
         this.medico = medico;
         this.data = data;
-        this.ativo = false;
+        this.ativo = true;
     }
 
 
     public void CancelaConsulta(DadosCancelamento dados){
-        this.ativo = true;
+        this.ativo = false;
         this.motivoCancelamento = dados.motivoCancelamento();
     }
 }
